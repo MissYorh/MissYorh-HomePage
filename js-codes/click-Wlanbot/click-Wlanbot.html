@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  
+  <!-- タイトル -->
+  <title>Click Wlanbot</title>
+    
+  <!-- CSSの読み込み -->
+  <link rel="stylesheet" href="click-Wlanbot.css">
+</head>
+
+
+
+
+
+<body>
+
+<!-- Header-->
+<header>
+  <h1>Click Wlanbot</h1>
+  <p id="show-code">Code</p>
+  <a href="../../index.html">Home</a>
+  <div id="code-menu">
+    <div id="code-header">
+      <div id="close-code">
+        <span id="line1"></span>
+        <span id="line2"></span>
+      </div>
+    </div>
+    <div class="code">
+      <h3>HTML</h3>
+      <pre>&lt;section class="scoreboard"&gt;
+  &lt;p id="score"&gt;Score : 000&lt;/p&gt;
+  &lt;p id="time"&gt;Time : 00:00&lt;/p&gt;
+&lt;/section&gt;
+  
+&lt;section class="gameboard"&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+  &lt;div class="box"&gt;
+    &lt;img src="../Wlanbot.png" alt="Wlanbot" class="imgs"&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+  
+&lt;section class="buttons"&gt;
+  &lt;div id="difficulty"&gt;
+    &lt;button onclick="easy()" id="easy"&gt;Easy&lt;/button&gt;
+    &lt;button onclick="normal()" id="normal" class="select"&gt;Normal&lt;/button&gt;
+    &lt;button onclick="hard()" id="hard"&gt;Hard&lt;/button&gt;
+    &lt;button onclick="nightmare()" id="nightmare"&gt;Nightmare&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div id="start"&gt;
+    &lt;p&gt;@_@&lt;/p&gt;
+    &lt;button onclick="startGame()" id="start-btn"&gt;Start&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;p id="start-count-down"&gt;3&lt;/p&gt;
+&lt;/section&gt;</pre>
+    </div>
+    <div class="code">
+      <h3>CSS</h3>
+      <pre>  /* ScoreBoard */
+.scoreboard {
+    width: 24rem;
+    
+    margin: 3rem auto 1rem;
+}
+
+.scoreboard #score {
+    font-size: 2rem;
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.scoreboard #time {
+    font-size: 1.2rem;
+    line-height: 1.2;
+}
+
+
+
+  /* GameBoard */
+.gameboard {    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+
+    width: 24rem;
+    height: 24rem;
+    
+    margin: 0 auto;
+    border: 0.05rem solid #000000;
+}
+
+.gameboard .box {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    border: 0.05rem solid #000000;
+
+    overflow: hidden;
+}
+
+
+
+  /* IMG */
+@keyframes inout {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.gameboard .box img {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    
+    animation: inout 0.2s ease-in;
+    
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+
+
+  /* Buttons */
+.buttons #start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    position: absolute;
+    top: 35rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    padding: 2rem;
+    border-radius: 2rem;
+    
+    font-size: 3rem;
+    white-space: nowrap;
+
+    color: #FFFFFF;
+    background-color: #1A294D;
+}
+
+.buttons #start-btn {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    
+    font-size: 2rem;
+    font-weight: bold;
+
+    color: #F0F8FF;
+    background-color: #1E90FF;
+    
+    animation: inout 0.3s ease-in;
+    
+    cursor: pointer;
+}
+
+.buttons #difficulty {
+    display : flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    position: absolute;
+    top: 10rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    padding: 1.5rem;
+    border-radius: 1.5rem;
+
+    background-color: #1A294D;
+}
+
+.buttons #difficulty button {
+    width: 100%;
+
+    padding: 0 0.75rem;
+    border: none;
+    border-radius: 0.75rem;
+    
+    font-size: 1.5rem;
+
+    color: #F0F8FF;
+    background-color: #1E90FF;
+}
+
+.buttons #difficulty button.select {
+    color: #F0F8FF;
+    background-color: #FF1E1E;
+}
+
+.buttons #start-count-down {
+    display: none;
+
+    position: absolute;
+    top: 20rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 10rem;
+    font-weight: bold;
+}</pre>
+    </div>
+    <div class="code">
+      <h3>JavaScript</h3>
+      <pre>/* Timer */
+const timer = document.getElementById("time");
+
+let countUp;
+function startCountUp() {
+  let ml = 0;
+  let sc = 0;
+  let mn = 0;
+  let hr = 0;
+  let dy = 0;
+
+  countUp = setInterval(function () {
+    ml += 1;
+
+    if (ml &gt;= 100) {
+      sc += 1;
+      ml = 0;
+    }
+
+    if (sc &gt;= 60) {
+      mn += 1;
+      sc = 0;
+    }
+
+    if (mn &gt;= 60) {
+      hr += 1;
+      mn = 0;
+    }
+
+    if (hr &gt;= 24) {
+      dy += 1;
+      hr = 0;
+    }
+
+
+    const p = (n, len = 2) =&gt; String(n).padStart(len, '0');
+
+
+    let text = '';
+    if (dy &gt; 0) {
+      text = `Time : ${p(dy)}::${p(hr)}:${p(mn)}:${p(sc)}:${p(ml)}`;
+    } else if (hr &gt; 0) {
+      text = `Time : ${p(hr)}:${p(mn)}:${p(sc)}:${p(ml)}`;
+    } else if (mn &gt; 0) {
+      text = `Time : ${p(mn)}:${p(sc)}:${p(ml)}`;
+    } else if (sc &gt; 0) {
+      text = `Time : ${p(sc)}:${p(ml)}`;
+    } else if (ml &gt;= 0) {
+      text = `Time : 00:${p(ml)}`;
+    }
+
+    timer.textContent = text;
+  }, 10);
+}
+/* /Timer */
+
+
+
+
+
+/* Difficulty */
+const difficulty = document.getElementById("difficulty");
+const easyBtn = document.getElementById("easy");
+const normalBtn = document.getElementById("normal");
+const hardBtn = document.getElementById("hard");
+const nightmareBtn = document.getElementById("nightmare");
+let speed = 400;
+
+function easy() {
+  speed = 800;
+  easyBtn.classList.add("select");
+  normalBtn.classList.remove("select");
+  hardBtn.classList.remove("select");
+  nightmareBtn.classList.remove("select");
+}
+
+function normal() {
+  speed = 400;
+  easyBtn.classList.remove("select");
+  normalBtn.classList.add("select");
+  hardBtn.classList.remove("select");
+  nightmareBtn.classList.remove("select");
+}
+
+function hard() {
+  speed = 200;
+  easyBtn.classList.remove("select");
+  normalBtn.classList.remove("select");
+  hardBtn.classList.add("select");
+  nightmareBtn.classList.remove("select");
+}
+
+function nightmare() {
+  speed = 100;
+  easyBtn.classList.remove("select");
+  normalBtn.classList.remove("select");
+  hardBtn.classList.remove("select");
+  nightmareBtn.classList.add("select");
+}
+/* /Difficulty */
+
+
+
+
+
+/* Game Over */
+function gameOver() { 
+  let block = 0;
+  for (let i = 0; i &lt; wlanImgs.length; i++) {
+    if (getComputedStyle(wlanImgs[i]).display === "block") {
+      block++;
+    }
+  }
+  
+  if (block == 9) {
+    clearInterval(countUp);
+    clearInterval(addImg);
+    startBtn.textContent = "Try Again";
+    start.firstElementChild.textContent = "Game Over!";
+    setTimeout(() =&gt; {
+      reset();
+    }, 200);  
+  }
+}
+/* /Game Over */
+
+
+
+
+
+/* RandomImg */
+const wlanImgs = document.getElementsByClassName("imgs");
+
+let addImg;
+function randomImg() {
+  addImg = setInterval(() =&gt; {
+    let picknone = [];
+    for (let j = 0; j &lt; wlanImgs.length; j++) {
+      if (getComputedStyle(wlanImgs[j]).display === "none") {
+        picknone.push(j);
+      }
+    }
+    
+    let randomIndex = Math.floor(Math.random() * picknone.length);
+    let aa = picknone[randomIndex];
+    
+    wlanImgs[aa].style.display = "block";
+
+    gameOver();
+  }, speed);
+};
+/* /RandomImg */
+
+
+
+
+
+/* ClickImg */
+const score = document.getElementById("score");
+
+let point = 0;
+[...wlanImgs].forEach(wlanImg =&gt; {
+  wlanImg.addEventListener('click', () =&gt; {
+    wlanImg.src = "../Wlanbot-Invert.png";
+    setTimeout(() =&gt; {
+      wlanImg.style.display = "none";
+      wlanImg.src = "../Wlanbot.png";
+    }, 200);
+
+    point++;
+    score.textContent = "Score : " + point;
+  });
+});
+/* /ClickImg */
+
+
+
+
+
+/* Start */
+const start = document.getElementById("start");
+const startBtn = document.getElementById("start-btn");
+const countDown = document.getElementById("start-count-down");
+
+function startGame() {
+  difficulty.style.display = "none";
+  start.style.display = "none";
+  countDown.style.display = "block";
+
+  let num = 2;
+  const startCountDown = setInterval(() =&gt; {
+    countDown.textContent = num;
+    num--;
+  }, 1000);
+
+  setTimeout(() =&gt; {
+    clearInterval(startCountDown);
+    countDown.style.display = "none";
+    startCountUp();
+    randomImg();
+  }, 3000);
+}
+/* /Start */
+
+
+
+
+
+/* Reset */
+function reset() {
+  [...wlanImgs].forEach(wlanImg =&gt; {
+    wlanImg.style.display = "none";
+  });
+  point = 0;
+  score.textContent = "Score : 000";
+      
+  start.style.display = "flex";
+  difficulty.style.display = "flex";
+
+  countDown.textContent = 3;
+  
+  timer.textContent = "Time : 00:00";
+}
+/* /Reset */</pre>
+    </div>
+  </div>
+</header>
+<!-- /Header -->
+
+
+
+
+
+<!-- Main -->
+<main>
+
+  <section class="scoreboard">
+    <p id="score">Score : 000</p>
+    <p id="time">Time : 00:00</p>
+  </section>
+  
+  <section class="gameboard">
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+    <div class="box">
+      <img src="../Wlanbot.png" alt="Wlanbot" class="imgs">
+    </div>
+  </section>
+  
+  <section class="buttons">
+    <div id="difficulty">
+      <button onclick="easy()" id="easy">Easy</button>
+      <button onclick="normal()" id="normal" class="select">Normal</button>
+      <button onclick="hard()" id="hard">Hard</button>
+      <button onclick="nightmare()" id="nightmare">Nightmare</button>
+    </div>
+    <div id="start">
+      <p>@_@</p>
+      <button onclick="startGame()" id="start-btn">Start</button>
+    </div>
+    <p id="start-count-down">3</p>
+  </section>
+  
+</main>
+<!-- /Main -->
+
+
+
+
+
+<!-- Footer -->
+<footer>
+  <p>For Practice</p>
+  <p>&copy; 2025 MissYorh. All rights reserved.</p>
+</footer>
+<!-- /Footer -->
+
+
+
+
+
+<!-- JavaScriptの読み込み -->
+  <script src="click-Wlanbot.js"></script>
+<!-- /JavaScriptの読み込み -->
+
+</body>
+</html>
