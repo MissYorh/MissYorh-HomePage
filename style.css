@@ -1,0 +1,302 @@
+* {
+    box-sizing: border-box;
+    
+    margin: 0;
+    padding: 0;
+    
+    scroll-margin-top: 25vh;
+    
+    user-select: none;
+    
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+
+    font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.05rem;
+    
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%; 
+    height: 100%;
+     
+    color: #2F2F2F;
+    background-color: #FFFFFF;       
+}
+
+
+
+
+
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    width: 100%;
+    height: 48px;
+    
+    padding: 4px;
+    
+    background-color: #2F2F2F;
+}
+
+#burger-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+
+    width: 20px;
+    aspect-ratio: 1 / 1;
+    
+    margin: 10px;
+    
+    cursor: pointer;
+}
+
+#burger-btn span {
+    width: 20px;
+
+    border: 1px solid #FFFFFF;
+    border-radius: 1px;
+}
+
+#burger-menu {
+    opacity: 0;
+
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100vw);
+    
+    background-color: #FFFFFF;
+    
+    transition: all 0.4s ease-out;
+}
+
+#burger-menu.open {
+    opacity: 1;
+ 
+    transform: translateX(0);
+}
+
+#burger-menu #burger-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    
+    width: 100%;
+    height: 48px;
+    
+    padding: 4px;
+    border-bottom: 2px solid #C0C0C0;
+}
+
+#burger-menu #burger-header #close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    width: 20px;
+    aspect-ratio: 1 / 1;
+    
+    margin: 10px;
+    
+    cursor: pointer;
+}
+
+#burger-menu #burger-header #close-btn span {
+    width: 20px;
+    position: absolute;
+
+    border: 1px solid #000000;
+    border-radius: 1px;
+}
+
+#close-btn span#line1 {
+    transform: rotate(45deg);
+}
+
+#close-btn span#line2 {
+    transform: rotate(-45deg);
+}
+
+#links {
+    padding: 1.5rem 0.5rem;
+}
+
+#links a {
+    display: inline-block;
+    
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.5;
+    text-decoration: none;
+    
+    color: #000000;
+}
+
+#links a::before {
+    content: "> ";
+}
+/* /Header */
+
+
+
+
+
+/* Main */
+section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+
+    height: 50vh;
+}
+
+h2 {
+    padding: 2rem;
+
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.contain {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+}
+
+.card {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    min-width: 100%;
+    height: 100%;
+    
+    padding: 1rem;
+}
+/* /Main */
+
+
+
+/* JS Code */
+#js-code {
+    background-color: #FFFFFF;
+}
+
+#js-code a {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+
+    border-radius: 1rem;
+    
+    text-decoration: none;
+    
+    color: #000000;
+    background-color: #FFFFFF; 
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+#js-code a img {
+    height: 80%;
+}
+/* /JS Code */
+
+
+
+/* Bookmarks */
+#bookmarks {
+    background-color: #F5F5F5;
+}
+
+#bookmarks a {
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+
+    height: 100%;
+    aspect-ratio: 16 / 12;
+    overflow: hidden;
+
+    border-radius: 0.5rem;
+    
+    text-decoration: none;
+    
+    color: #000000;
+    background-color: #FFFFFF; 
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+#bookmarks a img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+/* /Bookmarks */
+
+
+
+
+
+/* Responsive */
+@media (max-width: 768px) and (orientation: landscape) {
+    section {
+        min-height: 100vh;
+        max-height: 100vh;
+    }
+}
+
+@media (min-width: 768px) {
+    #bookmarks {
+        min-height: 50vh;
+        max-height: 50vh;
+    }
+
+    #bookmarks .card {
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+    
+    #bookmarks .card a {
+        max-height: calc(50% - 1rem);
+    }
+}
+
+/* /Responsive */
+
+
+
+
+
+/* Footer */
+footer {
+    color: #FFFFFF;
+    background-color: #101010;
+}
+/* /Footer */
