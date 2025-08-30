@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  
+  <!-- タイトル -->
+  <title>Joystick</title>
+    
+  <!-- CSSの読み込み -->
+  <link rel="stylesheet" href="joystick.css">
+</head>
+
+
+
+
+
+<body>
+
+<!-- Header-->
+<header>
+  <h1>Joystick</h1>
+  <p id="show-code">Code</p>
+  <a href="../../index.html">Home</a>
+  <div id="code-menu">
+    <div id="code-header">
+      <div id="close-code">
+        <span id="line1"></span>
+        <span id="line2"></span>
+      </div>
+    </div>
+    <div class="code">
+      <h3>HTML</h3>
+      <pre>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  
+  &lt;div id="board"&gt;
+    &lt;canvas id="game-board" width="2000" height="3000"&gt;&lt;/canvas&gt;
+
+    &lt;div id="joystick"&gt;
+      &lt;button id="top-btn"&gt;△&lt;/button&gt;
+      &lt;button id="left-btn"&gt;◁&lt;/button&gt;
+      &lt;button id="right-btn"&gt;▷&lt;/button&gt;
+      &lt;button id="bottom-btn"&gt;▽&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button id="reset-square" onclick="reset()"&gt;Reset&lt;/button&gt;
+  &lt;p id="text"&gt;&lt;/p&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+    </div>
+    <div class="code">
+      <h3>CSS</h3>
+      <pre>* {
+    box-sizing: border-box;
+    
+    margin: 0;
+    padding: 0;
+    
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%; 
+    height: 100%;
+}
+
+#board {
+    aspect-ratio: 2 / 3;
+    position: relative;
+
+    margin: 0 auto;
+}
+
+#game-board {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 2 / 3;
+    
+    border: 1px solid red;
+}
+
+#joystick {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1.5vw;
+    
+    position: absolute;
+    bottom: 3vw;
+    left: 3vw;
+}
+
+#joystick button {
+    aspect-ratio: 1 / 1;
+    
+    border: 0.2vw solid #C0C0C0;
+    
+    font-size: 6vw;
+    
+    color: #C0C0C0;
+    background-color: transparent;
+    
+    outline: none;
+}
+
+#joystick button:active {
+    border-color: #505050;
+    color: #505050;
+}
+
+#top-btn {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+#left-btn {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+#right-btn {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+}
+
+#bottom-btn {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+}
+
+@media (orientation: landscape) {
+    #joystick {
+        gap: 0.9vh;
+    
+        bottom: 1.8vh;
+        left: 1.8vh;
+    }
+
+    #joystick button {
+        border-width: 0.12vh;
+    
+        font-size: 3.6vh;
+    }
+}
+
+#reset-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    width: calc(100% - 10rem);
+    
+    margin: 1rem 5rem;
+    padding: 0.25rem;
+    border: 2px solid #C0C0C0;
+    border-radius: 20px;
+    
+    font-weight: bold;
+    
+    color: #404040;
+    background-color: #FFFFFF;
+    
+    outline: none;
+}</pre>
+    </div>
+    <div class="code">
+      <h3>JavaScript</h3>
+      <pre>/* Resize Board */
+const board = document.getElementById('board');
+const canvas = document.getElementById('game-board');
+const ctx = canvas.getContext('2d');
+const joystick = document.getElementById('joystick');
+const text = document.getElementById("text");
+
+function resizeBoard() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  
+  if (width &gt; height) {
+    board.style.maxWidth = "auto";
+    board.style.maxHeight = height * 0.8 + "px";
+  } else if (height &gt; width) {
+    board.style.maxWidth = width;
+    board.style.maxHeight = height * 0.8 + "px";
+  }
+
+  text.textContent = `${width}px, ${height}px`;
+}
+
+window.addEventListener("resize", resizeBoard);
+resizeBoard();
+/* /Resize Board */
+
+
+
+
+
+/* Move */
+const btns = joystick.getElementsByTagName("button");
+
+let x = 50;
+let y = 50;
+ctx.fillStyle = 'skyblue';
+ctx.fillRect(x, y, 100, 100);
+
+[...btns].forEach((btn, i) =&gt; {
+  btn.addEventListener("pointerdown", (e) =&gt; {
+    e.preventDefault();
+    const press = setInterval(() =&gt; {
+      move(i)
+    }, 1);
+    
+    btn.addEventListener("touchend", () =&gt; {
+      clearInterval(press);
+    });
+  });
+});
+
+function move(tlrb) {
+  switch (tlrb) {
+    case 0:   // Top
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(x, y, 100, 100);
+      y -= 10;
+      ctx.fillStyle = 'skyblue';
+      ctx.fillRect(x, y, 100, 100);
+      break;
+    case 1:   // Left
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(x, y, 100, 100);
+      x -= 10;
+      ctx.fillStyle = 'skyblue';
+      ctx.fillRect(x, y, 100, 100);
+      break;
+    case 2:   // Right
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(x, y, 100, 100);
+      x += 10;
+      ctx.fillStyle = 'skyblue';
+      ctx.fillRect(x, y, 100, 100);
+      break;
+    case 3:   // Bottom
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(x, y, 100, 100);
+      y += 10;
+      ctx.fillStyle = 'skyblue';
+      ctx.fillRect(x, y, 100, 100);
+      break;
+  }
+}
+
+function reset() {
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(x, y, 100, 100);
+  x = 950;
+  y = 1450;
+  ctx.fillStyle = 'skyblue';
+  ctx.fillRect(x, y, 100, 100);
+}
+/* /Move */</pre>
+    </div>
+  </div>
+</header>
+<!-- /Header -->
+
+
+
+
+
+<!-- Main -->
+<main>
+  
+  <div id="board">
+    <canvas id="game-board" width="2000" height="3000"></canvas>
+
+    <div id="joystick">
+      <button id="top-btn">△</button>
+      <button id="left-btn">◁</button>
+      <button id="right-btn">▷</button>
+      <button id="bottom-btn">▽</button>
+    </div>
+  </div>
+  <button id="reset-square" onclick="reset()">Reset</button>
+  <p id="text">l</p>
+</main>
+<!-- /Main -->
+
+
+
+
+
+<!-- Footer -->
+<footer>
+  <p>For Practice</p>
+  <p>&copy; 2025 MissYorh. All rights reserved.</p>
+</footer>
+<!-- /Footer -->
+
+
+
+
+
+<!-- JavaScriptの読み込み -->
+  <script src="joystick.js"></script>
+<!-- /JavaScriptの読み込み -->
+
+</body>
+</html>
